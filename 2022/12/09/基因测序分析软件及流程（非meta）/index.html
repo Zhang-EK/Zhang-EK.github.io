@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="测序软件使用记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二代、三代测序软件及分析流程整理">
+<meta property="og:url" content="http://example.com/2022/12/09/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6%E5%8F%8A%E6%B5%81%E7%A8%8B%EF%BC%88%E9%9D%9Emeta%EF%BC%89/index.html">
+<meta property="og:site_name" content="ZEK&amp;YL&#39;s blog">
+<meta property="og:description" content="测序软件使用记录">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-12-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-12-10T18:08:37.928Z">
+<meta property="article:author" content="ZEK YL">
+<meta property="article:tag" content="软件笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/09/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6%E5%8F%8A%E6%B5%81%E7%A8%8B%EF%BC%88%E9%9D%9Emeta%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>二代、三代测序软件及分析流程整理 | ZEK&YL's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZEK&YL's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZEK&YL's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-历史">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>历史</a>
+
+  </li>
+        <li class="menu-item menu-item-关于我们">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于我们</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/09/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6%E5%8F%8A%E6%B5%81%E7%A8%8B%EF%BC%88%E9%9D%9Emeta%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
+      <meta itemprop="name" content="ZEK YL">
+      <meta itemprop="description" content="2019.10.16">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEK&YL's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          二代、三代测序软件及分析流程整理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2022-12-09T00:00:00+00:00">2022-12-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-10 18:08:37" itemprop="dateModified" datetime="2022-12-10T18:08:37+00:00">2022-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">测序软件使用记录</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="二代、三代测序软件及分析流程整理"><a href="#二代、三代测序软件及分析流程整理" class="headerlink" title="二代、三代测序软件及分析流程整理"></a>二代、三代测序软件及分析流程整理</h1><h2 id="二代测序拼接软件"><a href="#二代测序拼接软件" class="headerlink" title="二代测序拼接软件"></a>二代测序拼接软件</h2><h3 id="SPAdes"><a href="#SPAdes" class="headerlink" title="SPAdes"></a>SPAdes</h3><p>该软件是最常用的二代测序拼接软件。速度虽然没有soapdenovo快，但是结果似乎更加可靠，并且考虑到SOAPdenovo多年没有更新，SPAdes应该为首选。</p>
+<p>另外，SPAdes 软件不仅支持 illumina 测序数据，还可用于Ion Torrent测序数据，PacBio测序数据、sanger 数据，Nanopore数据。并且可以加入其它拼接结果以作为辅助拼接（Hybrid）。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spades.py -<span class="number">1</span> illumina_ninanjie_1_clean.fastq.gz -<span class="number">2</span> illumina_ninanjie_2_clean.fastq.gz -o spades_illumina -t <span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="SOAPdenovo"><a href="#SOAPdenovo" class="headerlink" title="SOAPdenovo"></a>SOAPdenovo</h3><p>SOAPdenovo 是由华大基因开发的 SOAP 软件包的一部分，主要用于短序列 reads 拼接，尤其是 illumina 测序数据。但已长时间无人维护。</p>
+<h2 id="二代测序流程"><a href="#二代测序流程" class="headerlink" title="二代测序流程"></a>二代测序流程</h2><ol>
+<li>获取测序数据</li>
+<li>fastqc 质控</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastqc -f fastq -o illumina_qc/ illumina_ninanjie_1.fastq.gz illumina_ninanjie_2.fastq.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>fastp去除质量不好的位点</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastp -i ../illumina_ninanjie_1.fastq.gz -o ../illumina_ninanjie_1_clean.fastq.gz -I ../illumina_ninanjie_2.fastq.gz -O ../illumina_ninanjie_2_clean.fastq.gz -z <span class="number">4</span> -<span class="keyword">q</span> <span class="number">20</span> -u <span class="number">30</span> -n <span class="number">10</span> -f <span class="number">20</span> -t <span class="number">10</span> -F <span class="number">20</span> -T <span class="number">10</span> -h clean.html</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>再次fastqc质控得到clean的数据</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastqc -f fastq -o illumina_clean_qc/ illumina_ninanjie_1_clean.fastq.gz illumina_ninanjie_2_clean.fastq.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>使用二代测序拼接软件对clean数据进行拼接</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spades.py -<span class="number">1</span> illumina_ninanjie_1_clean.fastq.gz -<span class="number">2</span> illumina_ninanjie_2_clean.fastq.gz -o spades_illumina -t <span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>纠错</li>
+</ol>
+<h2 id="三代测序拼接软件"><a href="#三代测序拼接软件" class="headerlink" title="三代测序拼接软件"></a>三代测序拼接软件</h2><h3 id="flye（适合Pacbio和Nanopore）"><a href="#flye（适合Pacbio和Nanopore）" class="headerlink" title="flye（适合Pacbio和Nanopore）"></a>flye（适合Pacbio和Nanopore）</h3><p>flye 原来叫做abruijn，是一款适合单分子测序的拼接软件，适合处理Pacbio与Nanopore数据。flye 适合拼接多种数据集，从小的细菌基因组到很大的哺乳动物基因组都可以完成。</p>
+<p>flye 其实是一个完整的拼接流程，原始测序数据作为输入，最后就可以直接输出经过纠错校正的基因组序列，同时，flye 也有一个独立的模块可以用来拼接宏基因组。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flye --nano-raw nanopore_ninanjie.fastq.gz -g <span class="number">120</span>m -t <span class="number">12</span> -o flye_nano</span><br></pre></td></tr></table></figure>
+
+<h3 id="canu（适合Pacbio和Nanopore）"><a href="#canu（适合Pacbio和Nanopore）" class="headerlink" title="canu（适合Pacbio和Nanopore）"></a>canu（适合Pacbio和Nanopore）</h3><p>canu 是一款三代测序数据拼接软件，适用于 Pacbio 与 Nanopore 测序数据。canu 软件其实具有悠久的历史，虽然只发表于 2017 年，但其源于著名的 Celera Assembler。Celera Assembler 主要用于一代测序，现在已不再更新。canu 延续了Celera Assembler工具的组装原理，专门用于三代长读长以及错误率较高的测序的结果组装。canu软件缺点是非常消耗资源，拼接比较耗时，默认会使用所有 CPU。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canu -d canu -p canu genomeSize=<span class="number">5.4</span>m maxThreads=<span class="number">24</span> -nanopore-raw ../data/clean.filtlong.fq.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="wtdbg2（适合Pacbio和Nanopore）"><a href="#wtdbg2（适合Pacbio和Nanopore）" class="headerlink" title="wtdbg2（适合Pacbio和Nanopore）"></a>wtdbg2（适合Pacbio和Nanopore）</h3><p>wtdbg2是阮珏写的另外一个拼接软件，可以用于 PacBio 或Nanopore的数据拼接，该软件无需纠错直接进行拼接，然后生成一致性序列。wtdbg2运行速度比 canu 和 falcon 都要快很多。能够拼接人全基因组序列，甚至是32Gb的蝾螈基因组。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wtdbg2.pl -t <span class="number">12</span> -<span class="keyword">x</span> ont -g <span class="number">5.4</span>m -o wtdbg2 ../data/clean.filtlong.fq.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="三代测序流程"><a href="#三代测序流程" class="headerlink" title="三代测序流程"></a>三代测序流程</h2><ol>
+<li>获取测序数据</li>
+<li>质控（Nanopore使用nanoplot进行质控）</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NanoPlot --fastq nanopore.fastq.gz -o nanoplot</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>过滤数据</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filtlong --min_length <span class="number">2000</span> --min_mean_q <span class="number">90</span> nanopore.fastq.gz | gzip &gt;clean.filtlong.fq.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>再质控</li>
+</ol>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NanoPlot --fastq clean.filtlong.fq.gz -o nanoplot_clean</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>使用三代测序软件进行拼接（flye、canu、wtbdg2等）</li>
+<li>纠错</li>
+</ol>
+<h2 id="拼接结果优化"><a href="#拼接结果优化" class="headerlink" title="拼接结果优化"></a>拼接结果优化</h2><p>拼接结果优化，也就是纠错（polishing）。</p>
+<h3 id="Medeka"><a href="#Medeka" class="headerlink" title="Medeka"></a>Medeka</h3><p>Medaka是由 Oxford Nanopore 开发的开源软件。<strong>使用时最好创建虚拟环境，否则容易报错。</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入虚拟环境运行</span></span><br><span class="line">conda activate medaka</span><br><span class="line"><span class="comment">#运行软件</span></span><br><span class="line">READ=../data/nanopore.sra.fastq.gz</span><br><span class="line">medaka_consensus -i $READ -d assembly.fasta -o medaka_result -m r941_min_high_g36<span class="number">0</span> -v medaka.vcf -t <span class="number">24</span> &gt;medaka.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pilon"><a href="#Pilon" class="headerlink" title="Pilon"></a>Pilon</h3><p>Pilon 是由 broadinstitute 研究所开发的纠错工具，输入拼接结果（三代）以及原始测序数据（二代）比对到拼接结果（三代）的bam 文件即可。 输入的 bam 可以来自于二代测序数据的比对，也可以来自于三代测序数据比对得到的 bam，注意bam 文件需要排序并建立索引。<strong>并且Pilon在使用时要注意java使用的内存空间，修改Pilon.jar来增加上限，否则报错。</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#bwa建立索引</span></span><br><span class="line">bwa <span class="keyword">index</span> medaka.fasta</span><br><span class="line"><span class="comment">#使用bwa mem和illumina的测序结果比对得到sam文件</span></span><br><span class="line">READ1=<span class="regexp">/ifs1/</span>TestDatas/nanopore7/data/MGH78578/illumina.sra_1.fastq.gz READ2=<span class="regexp">/ifs1/</span>TestDatas/nanopore7/data/MGH78578/illumina.sra_2.fastq.gz</span><br><span class="line">bwa mem -t <span class="number">4</span> -R <span class="string">&#x27;@RG\tID:foo\tSM:bar:\tPL:ILLUMINA&#x27;</span> medaka.fasta $READ1 $READ2 &gt;illumina.sam</span><br><span class="line"><span class="comment">#samtools排序并建立索引且转化为bam格式节省空间</span></span><br><span class="line">samtools <span class="keyword">sort</span> -@ <span class="number">4</span> -O bam -o illumina.sorted.bam illumina.sam</span><br><span class="line">samtools <span class="keyword">index</span> illumina.sorted.bam</span><br><span class="line"><span class="comment">#Pilon</span></span><br><span class="line">java -Xmx32G -jar /ifs1/Software/biosoft/pilon/pilon-<span class="number">1.23</span>.jar --genome medaka.fasta --fix all --changes --frags illumina.sorted.bam --output pilon</span><br><span class="line">--outdir pilon_result --threads <span class="number">24</span> --vcf <span class="number">2</span>&gt; pilon.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="Racon"><a href="#Racon" class="headerlink" title="Racon"></a>Racon</h3><p>Racon 是基于 minimap 和 miniasm 构建一致性序列(consensus)的一款软件，也可以用于纠错。既可以用于三代数据也可以用于二代数据。输入数据需要三个，首先是 contig，然后是测序的 reads，以及前面二者比对的结果，这个比对结果是 MHAP， PAF，SAM 三种格式当中的一种即可。数据结果为纠错后的 contig 序列。 Racon 纠错一般都会进行多轮。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#连接原始拼接结果</span></span><br><span class="line">DRAFT=../pilon/pilon_result/pilon.fasta READ=<span class="regexp">/ifs1/</span>TestDatas/nanopore7/data/MGH78578/clean.filtlong.fq.gz</span><br><span class="line"><span class="comment">#minimap2 比对(bwa比对也可以)</span></span><br><span class="line">minimap2 -t <span class="number">4</span> $&#123;DRAFT&#125; $&#123;READ&#125; &gt; round_1.paf</span><br><span class="line"><span class="comment">#racon 进行纠错</span></span><br><span class="line">racon -t <span class="number">4</span> $&#123;READ&#125; round_1.paf $&#123;DRAFT&#125; &gt; racon_round1.fasta</span><br><span class="line"><span class="comment">#第二轮纠错</span></span><br><span class="line">minimap2 -t <span class="number">4</span> racon_round1.fasta $&#123;READ&#125; &gt; round_2.paf</span><br><span class="line">racon -t <span class="number">4</span> $&#123;READ&#125; round_2.paf racon_round1.fasta&gt; racon_round2.fasta</span><br><span class="line"><span class="comment">#第三轮纠错</span></span><br><span class="line">minimap2 -t <span class="number">4</span> racon_round2.fasta $&#123;READ&#125; &gt; round_3.paf</span><br><span class="line">racon -t <span class="number">4</span> $&#123;READ&#125; round_3.paf racon_round2.fasta&gt; racon_round3.fasta</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="特别注意"><a href="#特别注意" class="headerlink" title="特别注意"></a>特别注意</h2><ul>
+<li>一定要注意软件使用的范围，比如unicycler就只能拼接比较小的基因组比如细</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E7%AC%94%E8%AE%B0/" rel="tag"># 软件笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/08/test.method/" rel="prev" title="关于统计检验的一些知识笔记">
+      <i class="fa fa-chevron-left"></i> 关于统计检验的一些知识笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E3%80%81%E4%B8%89%E4%BB%A3%E6%B5%8B%E5%BA%8F%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B%E6%95%B4%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">二代、三代测序软件及分析流程整理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%8B%BC%E6%8E%A5%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">二代测序拼接软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPAdes"><span class="nav-number">1.1.1.</span> <span class="nav-text">SPAdes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOAPdenovo"><span class="nav-number">1.1.2.</span> <span class="nav-text">SOAPdenovo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二代测序流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%8B%BC%E6%8E%A5%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">三代测序拼接软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flye%EF%BC%88%E9%80%82%E5%90%88Pacbio%E5%92%8CNanopore%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">flye（适合Pacbio和Nanopore）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#canu%EF%BC%88%E9%80%82%E5%90%88Pacbio%E5%92%8CNanopore%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">canu（适合Pacbio和Nanopore）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wtdbg2%EF%BC%88%E9%80%82%E5%90%88Pacbio%E5%92%8CNanopore%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">wtdbg2（适合Pacbio和Nanopore）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%B5%81%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">三代测序流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E7%BB%93%E6%9E%9C%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">拼接结果优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Medeka"><span class="nav-number">1.5.1.</span> <span class="nav-text">Medeka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pilon"><span class="nav-number">1.5.2.</span> <span class="nav-text">Pilon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Racon"><span class="nav-number">1.5.3.</span> <span class="nav-text">Racon</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%88%AB%E6%B3%A8%E6%84%8F"><span class="nav-number">1.6.</span> <span class="nav-text">特别注意</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZEK YL"
+      src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
+  <p class="site-author-name" itemprop="name">ZEK YL</p>
+  <div class="site-description" itemprop="description">2019.10.16</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Zhang-EK" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Zhang-EK" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhangerkang73@gmail.com" title="E-Mail → mailto:zhangerkang73@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://scholar.google.com.hk/citations?user=e3kZB8YAAAAJ&hl=zh-CN" title="Google学术 → https:&#x2F;&#x2F;scholar.google.com.hk&#x2F;citations?user&#x3D;e3kZB8YAAAAJ&amp;hl&#x3D;zh-CN" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZEK YL</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="R学习笔记">
+  <meta name="description" content="宏基因测序软件使用记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于统计检验的一些知识笔记">
-<meta property="og:url" content="http://example.com/2022/12/08/test.method/index.html">
+<meta property="og:title" content="宏基因组测序及分析流程整理（更新中）">
+<meta property="og:url" content="http://example.com/2023/01/04/%E4%BA%8C%E4%BB%A3%E3%80%81%E4%B8%89%E4%BB%A3%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="ZEK&amp;YL&#39;s blog">
-<meta property="og:description" content="R学习笔记">
+<meta property="og:description" content="宏基因测序软件使用记录">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-12-08T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-04T14:46:47.159Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/image.png">
+<meta property="article:published_time" content="2023-01-04T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-04T15:31:22.405Z">
 <meta property="article:author" content="ZEK YL">
 <meta property="article:tag" content="生信软件学习笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/image.png">
 
-<link rel="canonical" href="http://example.com/2022/12/08/test.method/">
+<link rel="canonical" href="http://example.com/2023/01/04/%E4%BA%8C%E4%BB%A3%E3%80%81%E4%B8%89%E4%BB%A3%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>关于统计检验的一些知识笔记 | ZEK&YL's blog</title>
+  <title>宏基因组测序及分析流程整理（更新中） | ZEK&YL's blog</title>
   
 
 
@@ -167,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/08/test.method/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/04/%E4%BA%8C%E4%BB%A3%E3%80%81%E4%B8%89%E4%BB%A3%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
@@ -180,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于统计检验的一些知识笔记
+          宏基因组测序及分析流程整理（更新中）
         </h1>
 
         <div class="post-meta">
@@ -189,28 +191,22 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-12-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-12-08T00:00:00+00:00">2022-12-08</time>
+              <time title="Created: 2023-01-04 00:00:00 / Modified: 15:31:22" itemprop="dateCreated datePublished" datetime="2023-01-04T00:00:00+00:00">2023-01-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-04 14:46:47" itemprop="dateModified" datetime="2023-01-04T14:46:47+00:00">2023-01-04</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2022/" itemprop="url" rel="index"><span itemprop="name">2022</span></a>
+                  <a href="/categories/2023/" itemprop="url" rel="index"><span itemprop="name">2023</span></a>
                 </span>
             </span>
 
           
-            <div class="post-description">R学习笔记</div>
+            <div class="post-description">宏基因测序软件使用记录</div>
 
         </div>
       </header>
@@ -221,83 +217,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="关于统计检验的一些知识笔记（还需补充）"><a href="#关于统计检验的一些知识笔记（还需补充）" class="headerlink" title="关于统计检验的一些知识笔记（还需补充）"></a>关于统计检验的一些知识笔记（还需补充）</h1><h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>总的来说，统计检验是为了回答以下几个问题</p>
-<ul>
-<li>独不独立？<ul>
-<li>如果独立，那么就证明两种处理之间不相关</li>
-<li>如果不独立，那么就证明两种处理之间相关，则需要继续回答下一个问题<ul>
-<li>它们之间存在怎么样的关联？并继续下一个问题<ul>
-<li>它们之间的这种关联有多大的可信度？</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="独不独立？"><a href="#独不独立？" class="headerlink" title="独不独立？"></a>独不独立？</h2><p>要检测独不独立，则又要回答几个问题</p>
-<ul>
-<li>数据之间是连续型还是离散型？<ul>
-<li>如果是离散型（使用卡方检验或者Fisher’s exact test）<ul>
-<li>单因素卡方检验（卡方拟合度检验 chi-square goodness of fit test）</li>
-<li>多因素卡方检验 （卡方独立性检验 chis-square test of independence）</li>
-</ul>
-</li>
-<li>如果是连续型（使用t检验或者wilcox检验）<ul>
-<li>连续型数据且数据分布符合正态分布，那么使用t检验（当然如果组比较多那么就使用ANOVA也就是多重t检验）<ul>
-<li>如果观测对象相互之间独立，比如A1，B1，C1，那么使用普通t检验</li>
-<li>如果观测对象之间有联系，比如需要对比A1在接受某处理前后的数据，那么使用配对t检验</li>
-</ul>
-</li>
-<li>连续型数据但数据不符合正态分布，那么使用wilcox test</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h3><p>#离散型数据 </p>
-<p>卡方检验用于检测观察到的类别变量的分布是否与期望的不同，也就是期望值和观测值是否有显著差异。首先需要确定零假设：期望值和观测值之间没有差异。那么通过计算得到的假设成立可能性很低就说明期望值和观测值之间有差异（也就是p&lt;0.05）。如果检测样本只受到一种因素而影响分布那么就使用单因素卡方检验，如果是两种或多种就使用多因素卡方检验。df为自由度（单因素=x-1，多因素=(x-1)(y-1)）。</p>
-<p>例子：判断一个骰子是否被人动了手脚。那么就是要判断骰子的观测值和期望值是否有差距，所以是单因素。</p>
-<p>判断男生和女生对于体育喜爱程度（是否喜爱）是否有差异，就是多因素。</p>
-<h3 id="t检验"><a href="#t检验" class="headerlink" title="t检验"></a>t检验</h3><p>#连续性数据 #组别小于等于2</p>
-<p>t检验用于检测两组是否符合同一个正态分布，也就是没有差距（这就是假设前提）。</p>
-<p>唯一需要注意的是是否需要使用配对t检验，如果不同组使用的是同一观测对象，那么就需要使用配对t检验。</p>
-<h3 id="ANOVA检验-（方差分析）"><a href="#ANOVA检验-（方差分析）" class="headerlink" title="ANOVA检验 （方差分析）"></a>ANOVA检验 （方差分析）</h3><p>#连续性数据 #组别大于2 #消除误差 #多重t检验</p>
-<p>这里又要分为one-way ANOVA 和 two-way ANOVA 以及多因素方差分析</p>
-<p>单因素方差分析：不同职业群体（职业分组大于2）收入的差异。</p>
-<p>双因素方差分析：同一学历时,不同性别是否有着网购满意度差异性（x定类数据有两个：学历和性别）。</p>
-<p>多因素方差分析：比如研究者测试某新药对于胆固醇水平是否有疗效；研究者共招募72名被试，男女分别为36名，以及男女分别再细分使用新药和普通药物；同时高血压患者对于新药可能有干扰，因而研究者将被试是否患高血压也纳入考虑范畴中。因而最终，X共分为三个，分别是药物(旧药和新药)、性别，是否患高血压；Y为胆固醇水平。</p>
-<h3 id="上述三种方法的区别"><a href="#上述三种方法的区别" class="headerlink" title="上述三种方法的区别"></a>上述三种方法的区别</h3><table>
-<thead>
-<tr>
-<th align="center">X数据类型</th>
-<th align="center">X组别数</th>
-<th align="center">Y数据类型</th>
-<th align="center">分析方法</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">定类</td>
-<td align="center">2或更多</td>
-<td align="center">定量</td>
-<td align="center">方差分析</td>
-</tr>
-<tr>
-<td align="center">定类</td>
-<td align="center">2</td>
-<td align="center">定量</td>
-<td align="center">t检验</td>
-</tr>
-<tr>
-<td align="center">定类</td>
-<td align="center">任意</td>
-<td align="center">定类</td>
-<td align="center">卡方检验</td>
-</tr>
-</tbody></table>
-<h2 id="什么关联？多大关联？"><a href="#什么关联？多大关联？" class="headerlink" title="什么关联？多大关联？"></a>什么关联？多大关联？</h2><h3 id="相关性检验"><a href="#相关性检验" class="headerlink" title="相关性检验"></a>相关性检验</h3><p>检验两组数据之间是否具有相关性，如果有，那么是正相关还是负相关，相关强度有多少？</p>
-<p>相关系数[-1,1]，从极其负相关到极其正相关。并且经过相关性检验还会得到p值来判断结论的可信程度。</p>
+        <h1 id="宏基因组测序及分析流程"><a href="#宏基因组测序及分析流程" class="headerlink" title="宏基因组测序及分析流程"></a>宏基因组测序及分析流程</h1><h2 id="二代测序数据拼接"><a href="#二代测序数据拼接" class="headerlink" title="二代测序数据拼接"></a>二代测序数据拼接</h2><p>质控完成之后，宏基因组二代测序的数据拼接软件使用基本和单菌拼接保持一致，目前大部分软件都支持宏基因组的拼接模式。</p>
+<h3 id="SPAdes"><a href="#SPAdes" class="headerlink" title="SPAdes"></a>SPAdes</h3><p>该软件支持宏基因组的拼接模式，<strong>只需要加上参数–meta即可</strong>。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spades.py --meta -<span class="number">1</span> read_1.fastq.gz -<span class="number">2</span> read_2.fastq.gz -o spades_result -t <span class="number">24</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="megahit"><a href="#megahit" class="headerlink" title="megahit"></a>megahit</h3><p>该软件运行速度快于SPAdes且占用的计算资源也比较少，<strong>但组装效果不如前者</strong>。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">megahit -o megahit -<span class="number">1</span> read_1.fastq.gz -<span class="number">2</span> read_2.fastq.gz -t <span class="number">24</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三代测序数据拼接"><a href="#三代测序数据拼接" class="headerlink" title="三代测序数据拼接"></a>三代测序数据拼接</h2><h3 id="flye"><a href="#flye" class="headerlink" title="flye"></a>flye</h3><p>质控后，三代测序宏基因组数据仍然可以使用flye进行组装，它其中有一个metaflye的模块专门用来组装宏基因组数据。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flye --nano-raw nano.fastq.gz -g <span class="number">5</span>m -t <span class="number">12</span> -o metaflye_result --meta</span><br></pre></td></tr></table></figure>
+
+<p><strong>值得注意的是在进行完数据拼接后还可以使用纠错软件进行纠错（pilon、racon等），这里可能会涉及到使用二代测序数据辅助纠错</strong>。</p>
+<h2 id="二代三代软件拼接结果对比"><a href="#二代三代软件拼接结果对比" class="headerlink" title="二代三代软件拼接结果对比"></a>二代三代软件拼接结果对比</h2><p><img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/image.png"></p>
+<p>这里可以很明显的看到同为二代测序拼接，megahit所拼接出的contigs不如SPAdes长。Nanopore三代测序在读长方面的优势还是比较明显的。</p>
+<h2 id="宏基因组物种分类"><a href="#宏基因组物种分类" class="headerlink" title="宏基因组物种分类"></a>宏基因组物种分类</h2><h2 id="宏基因组基因预测及功能注释"><a href="#宏基因组基因预测及功能注释" class="headerlink" title="宏基因组基因预测及功能注释"></a>宏基因组基因预测及功能注释</h2><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2>
     </div>
 
     
@@ -315,13 +248,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/12/01/Unix_intro/" rel="prev" title="Unix 操作系统入门">
-      <i class="fa fa-chevron-left"></i> Unix 操作系统入门
+    <a href="/2022/12/09/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6%E5%8F%8A%E6%B5%81%E7%A8%8B%EF%BC%88%E9%9D%9Emeta%EF%BC%89/" rel="prev" title="二代、三代测序软件及分析流程整理">
+      <i class="fa fa-chevron-left"></i> 二代、三代测序软件及分析流程整理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/12/09/%E5%9F%BA%E5%9B%A0%E6%B5%8B%E5%BA%8F%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6%E5%8F%8A%E6%B5%81%E7%A8%8B%EF%BC%88%E9%9D%9Emeta%EF%BC%89/" rel="next" title="二代、三代测序软件及分析流程整理">
-      二代、三代测序软件及分析流程整理 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -380,7 +310,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%BB%9F%E8%AE%A1%E6%A3%80%E9%AA%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0%EF%BC%88%E8%BF%98%E9%9C%80%E8%A1%A5%E5%85%85%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">关于统计检验的一些知识笔记（还需补充）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">1.1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%AC%E4%B8%8D%E7%8B%AC%E7%AB%8B%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">独不独立？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%A1%E6%96%B9%E6%A3%80%E9%AA%8C"><span class="nav-number">1.2.1.</span> <span class="nav-text">卡方检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#t%E6%A3%80%E9%AA%8C"><span class="nav-number">1.2.2.</span> <span class="nav-text">t检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ANOVA%E6%A3%80%E9%AA%8C-%EF%BC%88%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">ANOVA检验 （方差分析）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%BF%B0%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.4.</span> <span class="nav-text">上述三种方法的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%85%B3%E8%81%94%EF%BC%9F%E5%A4%9A%E5%A4%A7%E5%85%B3%E8%81%94%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">什么关联？多大关联？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.3.1.</span> <span class="nav-text">相关性检验</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">宏基因组测序及分析流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5"><span class="nav-number">1.1.</span> <span class="nav-text">二代测序数据拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPAdes"><span class="nav-number">1.1.1.</span> <span class="nav-text">SPAdes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#megahit"><span class="nav-number">1.1.2.</span> <span class="nav-text">megahit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%BB%A3%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E6%8B%BC%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">三代测序数据拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flye"><span class="nav-number">1.2.1.</span> <span class="nav-text">flye</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E4%B8%89%E4%BB%A3%E8%BD%AF%E4%BB%B6%E6%8B%BC%E6%8E%A5%E7%BB%93%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="nav-number">1.3.</span> <span class="nav-text">二代三代软件拼接结果对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%89%A9%E7%A7%8D%E5%88%86%E7%B1%BB"><span class="nav-number">1.4.</span> <span class="nav-text">宏基因组物种分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A"><span class="nav-number">1.5.</span> <span class="nav-text">宏基因组基因预测及功能注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.6.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

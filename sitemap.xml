@@ -133,14 +133,14 @@
 
   
   <url>
-    <loc>http://example.com/categories/2023/</loc>
+    <loc>http://example.com/categories/2022/</loc>
     <lastmod>2023-01-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/2022/</loc>
+    <loc>http://example.com/categories/2023/</loc>
     <lastmod>2023-01-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

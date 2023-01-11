@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/2843758.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/48258.png">
 <meta property="article:published_time" content="2023-01-09T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-09T22:57:03.484Z">
+<meta property="article:modified_time" content="2023-01-11T12:18:53.104Z">
 <meta property="article:author" content="ZEK YL">
 <meta property="article:tag" content="生信软件学习笔记">
 <meta name="twitter:card" content="summary">
@@ -195,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-01-09 00:00:00 / Modified: 22:57:03" itemprop="dateCreated datePublished" datetime="2023-01-09T00:00:00+00:00">2023-01-09</time>
+              <time title="Created: 2023-01-09 00:00:00" itemprop="dateCreated datePublished" datetime="2023-01-09T00:00:00+00:00">2023-01-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-11 12:18:53" itemprop="dateModified" datetime="2023-01-11T12:18:53+00:00">2023-01-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -232,7 +238,8 @@
 <p><strong>公式：</strong>S<sub>obs</sub>为观察到的物种数，F<sub>1</sub>为只出现一次的物种数，F<sub>2</sub>为出现两次的物种数。</p>
 <p><strong>定义解释：</strong>在对群落样本进行抽样的时候如果还有没有被发现的物种，那么抽样的结果中就一直会存在只出现一次的物种，一直抽样直到没有只出现一次的物种时（也就是观察到的物种至少出现两次）就可以认为此时的被抽出的物种数目最接近样本的理论最高值。</p>
 <p><em><strong>Chao1指数越大，样本内的物种种类也就越多，Alpha多样性越高。</strong></em></p>
-<h3 id="Shannon指数"><a href="#Shannon指数" class="headerlink" title="Shannon指数"></a>Shannon指数</h3><p>$$<br>H=-\sum(P_i)(\log_2P_i)<br>\<br>P_i=\frac{n_i}{N}<br>$$</p>
+<h3 id="Shannon指数"><a href="#Shannon指数" class="headerlink" title="Shannon指数"></a>Shannon指数</h3><p>$$<br>H=-\sum(P_i)(\log_2P_i)<br>$$</p>
+<p>$$<br>P_i=\frac{n_i}{N}<br>$$</p>
 <p><strong>公式：</strong>P<sub>i</sub>为第i种物种的个体数占总个体数N的比例。</p>
 <p><strong>定义解释：</strong>对整个群落的样本进行抽样，预测下一个抽到的物种是什么，该指数反映的就是抽取到的物种的不确定性。</p>
 <p><em><strong>群落的丰富度越高，且不同物种分布越均匀，那么就越难预测下个采集的物种是什么，不确定性也就越高，Shannon指数也就越大，Alpha多样性越高。</strong></em></p>

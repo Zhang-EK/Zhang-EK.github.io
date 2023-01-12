@@ -22,7 +22,7 @@
 
   <meta name="description" content="宏基因测序软件使用记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="宏基因组测序及分析流程整理（更新中）">
+<meta property="og:title" content="宏基因组测序及分析流程整理">
 <meta property="og:url" content="http://example.com/2023/01/04/%E4%BA%8C%E4%BB%A3%E3%80%81%E4%B8%89%E4%BB%A3%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8B%E5%BA%8F%E5%8F%8A%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="ZEK&amp;YL&#39;s blog">
 <meta property="og:description" content="宏基因测序软件使用记录">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/4375.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/452415.png">
 <meta property="article:published_time" content="2023-01-04T00:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T16:54:02.916Z">
+<meta property="article:modified_time" content="2023-01-12T16:57:35.454Z">
 <meta property="article:author" content="ZEK YL">
 <meta property="article:tag" content="生信软件学习笔记">
 <meta name="twitter:card" content="summary">
@@ -54,7 +54,7 @@
   };
 </script>
 
-  <title>宏基因组测序及分析流程整理（更新中） | ZEK&YL's blog</title>
+  <title>宏基因组测序及分析流程整理 | ZEK&YL's blog</title>
   
 
 
@@ -188,7 +188,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          宏基因组测序及分析流程整理（更新中）
+          宏基因组测序及分析流程整理
         </h1>
 
         <div class="post-meta">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-12 16:54:02" itemprop="dateModified" datetime="2023-01-12T16:54:02+00:00">2023-01-12</time>
+                <time title="Modified: 2023-01-12 16:57:35" itemprop="dateModified" datetime="2023-01-12T16:57:35+00:00">2023-01-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,7 +284,7 @@
 <h4 id="Kneaddata"><a href="#Kneaddata" class="headerlink" title="Kneaddata"></a>Kneaddata</h4><p>Kneaddata是一个数据质控过滤流程，整合了Fasqc质控，Trimmomatic数据过滤，Bowtie2比对数据库过滤宿主等功能。输入原始数据后就可以得到Cleandata。默认集成了人、小鼠、rRNA等数据库。如果是其他宿主，可以自行建库。</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kneaddata -i reads_1.fastq.gz -i reads_2.fastq.gz -db path\Homo_sapiens -o kneaddata_output --remove-intermediate-output -v -t <span class="number">12</span> --trimmomatic-options <span class="string">&#x27;ILLUMINACLIP:~/miniconda3/envs/biobakery/share/trimmomatic/adapters/TruSeq3-PE.fa:2:40:15 SLIDINGWINDOW:4:20 MINLEN:50&#x27;</span> --reorder --bowtie2-options <span class="string">&#x27;--very-sensitive --dovetail&#x27;</span> --run-fastqc-start --run-fastqc-end</span><br></pre></td></tr></table></figure>
 
-<p><em><strong>数据库：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/kneadData_database/</strong></em></p>
+<p><em><strong>DB：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/kneadData_database/</strong></em></p>
 <h4 id="MetaPhlAn"><a href="#MetaPhlAn" class="headerlink" title="MetaPhlAn"></a>MetaPhlAn</h4><p>MetaPhlan是用于二代测序物种分类的工具，利用快速比对工具Bowtie2与Marker基因集比对（非全基因组），所以运行速度非常的快。输入Kneaddata过滤后的数据就可以快速得到微生物群体中的物种组成。</p>
 <p>MetaPhlAn调用Bowtie2比对，可以输入多种格式fasta、fastq、bowtie2out、sam等。</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">metaphlan --input_type fastq --nproc <span class="number">12</span> --bowtie2out metagenome.bowtie2.bz2 reads_filter.<span class="number">1</span>.fastq.gz,reads_filter.<span class="number">2</span>.fastq.gz -o SRS011243_abundance_table.txt</span><br></pre></td></tr></table></figure>
@@ -292,7 +292,7 @@
 <p>结果导出的表格分为两列，第一列为物种分类，按照层级从大到小排列。第二列是物种的相对丰度，每一层级加起来都是100%，有些软件输出的则是reads数目。</p>
 <img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/4375.png" alt="4375" style="zoom:50%;" />
 
-<p><em><strong>数据库：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/metaphlan_database/</strong></em></p>
+<p><em><strong>DB：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/metaphlan_database/</strong></em></p>
 <h4 id="HUMAnN"><a href="#HUMAnN" class="headerlink" title="HUMAnN"></a>HUMAnN</h4><p>HUMAnN不仅可以通过调用MetaPhlAn完成物种组成部分还可以准确地获得微生物代谢途径和功能模块信息。</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">humann --input-<span class="keyword">format</span> fastq --input reads_filter.<span class="number">1</span>.fastq.gz --input reads_filter.<span class="number">2</span>.fastq.gz --output result --threads <span class="number">12</span> --search-mode uniref9<span class="number">0</span></span><br></pre></td></tr></table></figure>
 
@@ -305,7 +305,7 @@
 <li>通路覆盖文件（pathcoverage）</li>
 </ol>
 <p>另外，HUMAnM还支持比对到其他蛋白数据库的注释结果，以及对RPK的标准化/归一化处理，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/240910229">见该网站</a>。</p>
-<p><em><strong>数据库：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/humann_database/</strong></em></p>
+<p><em><strong>DB：/data/Food/primary/R0987_nextgen/Erkang.Zhang/20221130_course/course_4_meta/humann_database/</strong></em></p>
 <h3 id="最终结果的可视化"><a href="#最终结果的可视化" class="headerlink" title="最终结果的可视化"></a>最终结果的可视化</h3><h4 id="Pavian可视化"><a href="#Pavian可视化" class="headerlink" title="Pavian可视化"></a>Pavian可视化</h4><p>Pavian是一款R包，<a target="_blank" rel="noopener" href="https://fbreitwieser.shinyapps.io/pavian/">但也有网页形式</a>。可以用来可视化Kraken、MetaPhlAn、Centrifuge等软件的结果。如果要可视化Centrifuge的结果，需要先将其转化为Kraken的结果格式。</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">centrifuge-kreport -<span class="keyword">x</span> centrifuge_p/p_compressed result_log.tsv &gt;kraken_result_log.tsv</span><br></pre></td></tr></table></figure>
 

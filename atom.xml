@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-01-12T15:04:06.300Z</updated>
+  <updated>2023-01-16T21:21:28.294Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,15 +17,23 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="http://example.com/2023/01/12/%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A/"/>
-    <id>http://example.com/2023/01/12/%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A/</id>
-    <published>2023-01-12T15:04:04.481Z</published>
-    <updated>2023-01-12T15:04:06.300Z</updated>
+    <title>宏基因组基因预测及功能注释</title>
+    <link href="http://example.com/2023/01/16/%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A/"/>
+    <id>http://example.com/2023/01/16/%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A/</id>
+    <published>2023-01-16T00:00:00.000Z</published>
+    <updated>2023-01-16T21:21:28.294Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="宏基因组基因预测及功能注释"><a href="#宏基因组基因预测及功能注释" class="headerlink" title="宏基因组基因预测及功能注释"></a>宏基因组基因预测及功能注释</h1><h2 id="基因预测（Predict）"><a href="#基因预测（Predict）" class="headerlink" title="基因预测（Predict）"></a>基因预测（Predict）</h2><h3 id="开放阅读框（Open-reading-frame）"><a href="#开放阅读框（Open-reading-frame）" class="headerlink" title="开放阅读框（Open reading frame）"></a>开放阅读框（Open reading frame）</h3><p>一个起始密码子到一个终止密码子之间的基因部分就叫做一个开放阅读框。ORF不一定是基因，但基因一定是ORF。</p><h3 id="Prodigal"><a href="#Prodigal" class="headerlink" title="Prodigal"></a>Prodigal</h3><p>该软件可以快速预测<strong>原核生物</strong>的基因信息。默认密码子表是第11套（支原体用第4套）。</p><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prodigal -i test.fa -d test.ffn -a test.faa -o test.gff -f gff</span><br></pre></td></tr></table></figure><ul><li><p>ffn文件是基因的核酸序列。</p></li><li><p>faa文件是翻译过后的基因氨基酸序列。</p></li><li><p>gff(gene feature file)文件是一种列表格式，记录一段序列起始和结束的位点，表示基因的坐标（sanger定义的一种格式）。</p></li></ul><p><em><strong>通过计算可以发现原核生物基因组中基因所占的部分较高，说明重复序列较少（存储效率高）。</strong></em></p><h3 id="Glimmer"><a href="#Glimmer" class="headerlink" title="Glimmer"></a>Glimmer</h3><p>也可以快速预测原核生物的基因信息，但不如prodigal方便，不能直接输出核酸序列，需要从列表里提取。不建议使用。</p><h2 id="基因功能注释（Annotation）"><a href="#基因功能注释（Annotation）" class="headerlink" title="基因功能注释（Annotation）"></a>基因功能注释（Annotation）</h2><h3 id="功能注释数据库"><a href="#功能注释数据库" class="headerlink" title="功能注释数据库"></a>功能注释数据库</h3><ul><li><p>NR数据库：非冗余的蛋白数据库。已发表的基因转录出的功能蛋白都收录，大而全，但准确性存疑。</p></li><li><p>UniProt：比较精确，其中的蛋白序列都是经过验证的，但数据库较小。</p></li><li><p>Gene Ontology：为了统一相同序列在不同数据库中名称不同而建立的库，使用统一的语言描述功能。</p></li><li><p>CARD数据库</p></li><li><p>KEGG数据库：基因的代谢信息，通路中的基因信息比较丰富。</p></li><li><p>COG数据库</p></li><li><p>CAZy数据库</p></li></ul><h3 id="Eggnog-mapper"><a href="#Eggnog-mapper" class="headerlink" title="Eggnog-mapper"></a>Eggnog-mapper</h3><p>Eggnog-mapper是一个基因功能注释流程，可以自动完成基因的功能注释，其内置了COG、KOG、KEGG、GO、BiGG等数据库（KEGG数据库是免费版本）。调用的是Diamond进行比对。</p><p><em><strong>由于python版本问题，最好在虚拟环境中运行。</strong></em></p><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">emapper.py -i test.faa --output test.annotation -m diamond</span><br></pre></td></tr></table></figure><p>输入数据可以是faa氨基酸序列，也可以输入基因序列，但建议还是输入氨基酸序列。–data_dir还可以指定数据库的位置。</p><p>生成两个文件 .annotations和.seed_orthologs。比较重要的就是第一列和最后一列。</p><img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/dshfu.png" alt="dshfu" style="zoom:67%;" /><p>这个软件也提供一个在线的比对<a href="http://eggnog-mapper.embl.de/">网站</a>。</p>]]></content>
+    
+    
+    <summary type="html">分析和预测宏基因组中的基因并且注释其功能</summary>
     
     
     
+    <category term="2023" scheme="http://example.com/categories/2023/"/>
     
+    
+    <category term="生信软件学习笔记" scheme="http://example.com/tags/%E7%94%9F%E4%BF%A1%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   

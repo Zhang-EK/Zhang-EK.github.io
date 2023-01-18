@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="整理基因序列比对中会使用到的软件及其基本的比对原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基因组序列比对原理及软件">
+<meta property="og:url" content="http://example.com/2023/01/18/%E5%9F%BA%E5%9B%A0%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9/index.html">
+<meta property="og:site_name" content="ZEK&amp;YL&#39;s blog">
+<meta property="og:description" content="整理基因序列比对中会使用到的软件及其基本的比对原理">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/7836591.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/948578.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/74365.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/shighi.png">
+<meta property="article:published_time" content="2023-01-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-18T21:08:21.441Z">
+<meta property="article:author" content="ZEK YL">
+<meta property="article:tag" content="生信软件学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/7836591.png">
+
+<link rel="canonical" href="http://example.com/2023/01/18/%E5%9F%BA%E5%9B%A0%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>基因组序列比对原理及软件 | ZEK&YL's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="ZEK&YL's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ZEK&YL's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-历史">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>历史</a>
+
+  </li>
+        <li class="menu-item menu-item-关于我们">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于我们</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/18/%E5%9F%BA%E5%9B%A0%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
+      <meta itemprop="name" content="ZEK YL">
+      <meta itemprop="description" content="2019.10.16">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEK&YL's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基因组序列比对原理及软件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-01-18 00:00:00 / Modified: 21:08:21" itemprop="dateCreated datePublished" datetime="2023-01-18T00:00:00+00:00">2023-01-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2023/" itemprop="url" rel="index"><span itemprop="name">2023</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">整理基因序列比对中会使用到的软件及其基本的比对原理</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基因组序列比对原理及软件"><a href="#基因组序列比对原理及软件" class="headerlink" title="基因组序列比对原理及软件"></a>基因组序列比对原理及软件</h1><p>进行基因的序列比对首先要了解两个概念：</p>
+<ul>
+<li>同源（homology）：两段序列来自于同一个祖先，在后来进化的分化过程中慢慢地各自发生了一些替换或者插入缺失突变，也就是说两段序列不再完全精确的相同。</li>
+<li>相似（similarity）：单纯地指两段序列碱基排序相同，但不具有生物学意义。</li>
+</ul>
+<p><em><strong>同源的序列一定是相似的，但相似的序列不一定是同源的。</strong></em></p>
+<p><em><strong>如果能事先确定两条序列的同源性再决定是否比对，这样得到的结果会更有意义。</strong></em></p>
+<h2 id="局部比对"><a href="#局部比对" class="headerlink" title="局部比对"></a>局部比对</h2><p>两条亲缘关系较远的核酸序列可能只在一些片段上相似，局部比对就可以找到这些局部相似的片段。局部比对允许两条序列不必完整的找到最佳比对方式，只需要使用序列中的某些部分获得最佳匹配得分即可。</p>
+<img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/7836591.png" alt="7836591" style="zoom: 50%;" />
+
+<p><em><strong>局部比对算法更关注于两条序列的相同点，也就是说我们在寻找两条序列的相似性时通常使用局部比对算法（物种分类、基因注释）。</strong></em></p>
+<h3 id="Blast"><a href="#Blast" class="headerlink" title="Blast"></a>Blast</h3><p>使用的就是局部比对算法，可以在线比对。常用的功能如下：</p>
+<img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/948578.png" alt="948578" style="zoom: 50%;" />
+
+<p>Blast比对最主要的应用就是物种鉴定和基因功能注释。</p>
+<h4 id="物种鉴定"><a href="#物种鉴定" class="headerlink" title="物种鉴定"></a>物种鉴定</h4><p>拿到一条未知的序列可以直接前往nt库或者nr进行比对来鉴定。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#数据库写前缀就可以</span></span><br><span class="line">blastn -db database/nt -query test.fasta -out blastn.out -outfmt <span class="number">6</span> -evalue <span class="number">1</span>e-<span class="number">5</span> -num_threads <span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="基因功能注释"><a href="#基因功能注释" class="headerlink" title="基因功能注释"></a>基因功能注释</h4><p>原理也是通过比对已知的序列信息来得到未知的序列中可能包含的信息。所以可以看出比对时所使用的数据库很重要，如果数据库有错误那么比对的结果就也会出错。一般使用nr、COG等数据库。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blastx -db database/nr -query gene.fa -out blastx.out</span><br></pre></td></tr></table></figure>
+
+<h3 id="Diamond"><a href="#Diamond" class="headerlink" title="Diamond"></a>Diamond</h3><p>与blast类似，diamond也是应用于序列比对方面的工具，比对完成之后可以直接导入megan软件进行物种分类以及数据可视化。相比较于blast，diamond的运行速度更快但是只能进行氨基酸水平的比对，不能进行核酸水平的比对。</p>
+<p><em><strong>要注意diamond库与diamond软件的匹配。</strong></em></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#diamond物种鉴定</span></span><br><span class="line">diamond blastx -<span class="keyword">q</span> test.fastq --db database/nr -o test -p <span class="number">12</span> -f <span class="number">100</span></span><br><span class="line"><span class="comment">#利用blastp比对两条氨基酸序列</span></span><br><span class="line">diamond makedb --in ref.faa --db <span class="keyword">ref</span></span><br><span class="line">diamond blastp -<span class="keyword">q</span> query.faa -d <span class="keyword">ref</span> -o blastp.txt -p <span class="number">12</span> -f <span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="全局比对"><a href="#全局比对" class="headerlink" title="全局比对"></a>全局比对</h2><p>衡量两条序列的整体相似性，不关注于局部。全局比对尝试获得两条完整序列之间的最佳比对。</p>
+<p>全局比对主要用于比较两个基因组之间的同源性，绘制共线性图等等，也常用于基因组结构变异的检测。</p>
+<img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/74365.png" alt="74365" style="zoom: 50%;" />
+
+<p><em><strong>全局比对更加关注于找到两条序列的差异，所以在比较两条序列的差异时我们常使用全局比对。</strong></em></p>
+<h3 id="Mummer（Maximal-Unique-Matcher）"><a href="#Mummer（Maximal-Unique-Matcher）" class="headerlink" title="Mummer（Maximal Unique Matcher）"></a>Mummer（Maximal Unique Matcher）</h3><p>全局比对软件。该软件集合了一系列功能，例如基因组比对、共线性分析、同源序列查找等。</p>
+<h4 id="比对"><a href="#比对" class="headerlink" title="比对"></a>比对</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#比对</span></span><br><span class="line">nucmer ref.fna qd23.fna</span><br><span class="line"><span class="comment">#过滤delta结果</span></span><br><span class="line">delta-filter -<span class="number">1</span> -<span class="keyword">q</span> -r out.delta &gt;out.filter</span><br></pre></td></tr></table></figure>
+
+<p>-q -r参数分别表示仅保留query或者ref上的最佳位置，允许多条ref或者query在另一条上堆叠。-1 则表示取两者的交集（好像得到的结果和-q -r同时输入结果一样）。如下图，-q则保留左2，-r保留右3。</p>
+<img src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/shighi.png" alt="shighi" style="zoom: 67%;" />
+
+<h4 id="显示比对差异"><a href="#显示比对差异" class="headerlink" title="显示比对差异"></a>显示比对差异</h4><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示比对结果 需要给出两条序列在文件中的编号</span></span><br><span class="line"><span class="keyword">grep</span> <span class="string">&quot;&gt;&quot;</span> out.filter</span><br><span class="line">show-aligns out.filter NC_016846.<span class="number">1</span> contig_1_pilon</span><br><span class="line"><span class="comment">#显示差异(分别以q和r为准)</span></span><br><span class="line">show-diff out.filter -<span class="keyword">q</span></span><br><span class="line">show-diff out.filter -r</span><br><span class="line"><span class="comment">#显示突变位点</span></span><br><span class="line">show-snps -C -H -I -T -r -<span class="number">1</span> out.filter &gt;out.snp</span><br><span class="line"><span class="comment">#显示变异坐标</span></span><br><span class="line">show-coords out.filter -r &gt;out.coords</span><br><span class="line"><span class="comment">#mummerplot绘图(共线性结果图)</span></span><br><span class="line">mummerplot -p p1 out.filter --png</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%94%9F%E4%BF%A1%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 生信软件学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/16/%E5%AE%8F%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%9F%BA%E5%9B%A0%E9%A2%84%E6%B5%8B%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A/" rel="prev" title="宏基因组基因预测及功能注释">
+      <i class="fa fa-chevron-left"></i> 宏基因组基因预测及功能注释
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E5%8E%9F%E7%90%86%E5%8F%8A%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">基因组序列比对原理及软件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%AF%94%E5%AF%B9"><span class="nav-number">1.1.</span> <span class="nav-text">局部比对</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blast"><span class="nav-number">1.1.1.</span> <span class="nav-text">Blast</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E7%A7%8D%E9%89%B4%E5%AE%9A"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">物种鉴定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E5%9B%A0%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">基因功能注释</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Diamond"><span class="nav-number">1.1.2.</span> <span class="nav-text">Diamond</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E6%AF%94%E5%AF%B9"><span class="nav-number">1.2.</span> <span class="nav-text">全局比对</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mummer%EF%BC%88Maximal-Unique-Matcher%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">Mummer（Maximal Unique Matcher）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E5%AF%B9"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">比对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%AF%94%E5%AF%B9%E5%B7%AE%E5%BC%82"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">显示比对差异</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZEK YL"
+      src="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
+  <p class="site-author-name" itemprop="name">ZEK YL</p>
+  <div class="site-description" itemprop="description">2019.10.16</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Zhang-EK" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Zhang-EK" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhangerkang73@gmail.com" title="E-Mail → mailto:zhangerkang73@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://scholar.google.com.hk/citations?user=e3kZB8YAAAAJ&hl=zh-CN" title="Google学术 → https:&#x2F;&#x2F;scholar.google.com.hk&#x2F;citations?user&#x3D;e3kZB8YAAAAJ&amp;hl&#x3D;zh-CN" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZEK YL</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

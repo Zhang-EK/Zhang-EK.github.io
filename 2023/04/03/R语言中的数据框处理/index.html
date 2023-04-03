@@ -28,7 +28,7 @@
 <meta property="og:description" content="关于R处理数据框会使用到的一些函数">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-04-02T23:00:00.000Z">
-<meta property="article:modified_time" content="2023-04-03T17:58:15.937Z">
+<meta property="article:modified_time" content="2023-04-03T21:58:47.747Z">
 <meta property="article:author" content="ZEK YL">
 <meta property="article:tag" content="R学习笔记">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-04-03 00:00:00 / Modified: 18:58:15" itemprop="dateCreated datePublished" datetime="2023-04-03T00:00:00+01:00">2023-04-03</time>
+              <time title="Created: 2023-04-03 00:00:00 / Modified: 22:58:47" itemprop="dateCreated datePublished" datetime="2023-04-03T00:00:00+01:00">2023-04-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,6 +261,26 @@
 <h4 id="recode"><a href="#recode" class="headerlink" title="recode"></a>recode</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data15 &lt;- data14 %&gt;% mutate(weight_size = recode(weight_size, <span class="string">&quot;large&quot;</span>=<span class="number">1</span> ,</span><br><span class="line">                            <span class="string">&quot;small&quot;</span>=<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
 
 <p>可以根据单元格中的内容成组转换，比如将large体型转化为1，small体型转化为2。</p>
+<h2 id="reshape2包"><a href="#reshape2包" class="headerlink" title="reshape2包"></a>reshape2包</h2><h4 id="melt"><a href="#melt" class="headerlink" title="melt"></a>melt</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">melt(MASS::ships, id.vars = <span class="built_in">c</span>(<span class="string">&quot;type&quot;</span>,<span class="string">&quot;year&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>将宽数据框转化为长数据。</p>
+<ul>
+<li>Id.vars 标识变量，也就是不想变的列名（不想变的变量）</li>
+<li>measure.vars 度量变量，也就是要展开的列名（如果不特殊指定的话就是上面id.vars的补集）</li>
+<li>variable.name 对度量变量那一列变换后的命名，默认为variable</li>
+<li>na.rm 是否删除缺失值</li>
+<li>value.name 对度量变量值那一列的命名，默认为value</li>
+</ul>
+<p>其实就是把measure.vars中的多个列合成一个列。m列n行的数据框，如果指定一个量度变量那么最后的长数据表就会是3列n(m-1)行，指定两个就会是4列n(m-2)行。</p>
+<h4 id="cast"><a href="#cast" class="headerlink" title="cast"></a>cast</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ships_melt_dcast &lt;- dcast(ships_melt, year + variable ~ type, fun.aggregate = mean)</span><br></pre></td></tr></table></figure>
+
+<p>将长数据转化为宽数据。</p>
+<ul>
+<li>formula 描述最后想要的结果, a + b …. ~ c + d …..   a和b定义了确定各行内容，c和d确定了各列的内容</li>
+<li>fun.aggregate 数据整合函数，平均值等</li>
+<li> value.var 指定储存value的那一列，默认是剩下的最后一个列</li>
+</ul>
+<p>其实相当于减少了一个或多个变量（一个列），将一列拆分成了多个列，也就是a、b不懂，将c、d两列拆分为多个列。主要还是要看将数据框变形的目的是什么，是为了看什么数值之间的关系。</p>
 
     </div>
 
@@ -341,7 +361,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#R%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A1%86%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">R语言中的数据框处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dplyr%E5%8C%85%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">dplyr包中的函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%8F%98%E9%87%8F%E7%9A%84%E5%87%BD%E6%95%B0%EF%BC%88%E5%A4%84%E7%90%86%E5%88%97%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">处理变量的函数（处理列）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutate"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">mutate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%9B%E9%80%89%E4%B8%AA%E6%A1%88%EF%BC%88%E5%A4%84%E7%90%86%E8%A1%8C%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">筛选个案（处理行）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#filter"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arrange"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">arrange</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%8D%95%E5%85%83%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">处理单元格数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-else"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">if_else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recode"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">recode</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#R%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%A1%86%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">R语言中的数据框处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dplyr%E5%8C%85%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">dplyr包中的函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%8F%98%E9%87%8F%E7%9A%84%E5%87%BD%E6%95%B0%EF%BC%88%E5%A4%84%E7%90%86%E5%88%97%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">处理变量的函数（处理列）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutate"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">mutate</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%9B%E9%80%89%E4%B8%AA%E6%A1%88%EF%BC%88%E5%A4%84%E7%90%86%E8%A1%8C%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">筛选个案（处理行）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#filter"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arrange"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">arrange</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%8D%95%E5%85%83%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">处理单元格数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-else"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">if_else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recode"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">recode</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reshape2%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">reshape2包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#melt"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">melt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cast"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">cast</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

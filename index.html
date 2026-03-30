@@ -191,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/23/anvio_pangenome/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/03/30/anvio_pangenome/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://raw.githubusercontent.com/Zhang-EK/blog_img/main/WechatIMG22.jpeg">
@@ -205,7 +205,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2026/03/23/anvio_pangenome/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2026/03/30/anvio_pangenome/" class="post-title-link" itemprop="url">anvio的pangenome分析使用步骤</a>
         </h2>
 
         <div class="post-meta">
@@ -214,16 +214,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2026-03-23 21:09:31" itemprop="dateCreated datePublished" datetime="2026-03-23T21:09:31+00:00">2026-03-23</time>
+              <time title="Created: 2026-03-30 00:00:00 / Modified: 20:08:51" itemprop="dateCreated datePublished" datetime="2026-03-30T00:00:00+01:00">2026-03-30</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-30 19:40:06" itemprop="dateModified" datetime="2026-03-30T19:40:06+01:00">2026-03-30</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2026/" itemprop="url" rel="index"><span itemprop="name">2026</span></a>
+                </span>
+            </span>
 
           
 
@@ -236,33 +239,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <hr>
-<p>title: anvio的pangenome分析使用步骤<br>date: 2026-3-30<br>tags: 生信软件学习笔记<br>author: ZEK<br>description: anvio pangenome 分析流程<br>categories: 2026</p>
-<hr>
-<h1 id="anvio的pangenome分析使用步骤"><a href="#anvio的pangenome分析使用步骤" class="headerlink" title="anvio的pangenome分析使用步骤"></a>anvio的pangenome分析使用步骤</h1><h2 id="1-检查fasta文件的contig名字是否唯一，可以使用anvi-script-reformat-fasta命令来重命名"><a href="#1-检查fasta文件的contig名字是否唯一，可以使用anvi-script-reformat-fasta命令来重命名" class="headerlink" title="1. 检查fasta文件的contig名字是否唯一，可以使用anvi-script-reformat-fasta命令来重命名"></a>1. 检查fasta文件的contig名字是否唯一，可以使用anvi-script-reformat-fasta命令来重命名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">anvi-script-reformat-fasta fasta \</span><br><span class="line">                          -o contigs-fasta \</span><br><span class="line">                          --simplify-names \</span><br><span class="line">                          --report-file contig-rename-report-txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-建立contig-database"><a href="#2-建立contig-database" class="headerlink" title="2. 建立contig database"></a>2. 建立contig database</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anvi-gen-contigs-database -f Patient_6557_E_faecalis_cultivar.fa \</span><br><span class="line">                          --project-name E_faecalis_P6557 \</span><br><span class="line">                          -o E_faecalis_P6557.db</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-使用不同的数据库来注释contig-database"><a href="#3-使用不同的数据库来注释contig-database" class="headerlink" title="3. 使用不同的数据库来注释contig database"></a>3. 使用不同的数据库来注释contig database</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anvi-run-kegg-kofams -c <span class="variable">$i</span> --kegg-data-dir /data/Food/analysis/R0987_nextgen/Erkang.Zhang/anvio_database/kegg_database</span><br><span class="line"></span><br><span class="line">anvi-run-ncbi-cogs -c <span class="variable">$i</span> --cog-data-dir /data/Food/analysis/R0987_nextgen/Erkang.Zhang/anvio_database/COG_database</span><br></pre></td></tr></table></figure>
-
-<p>这会直接在database文件中加入注释信息</p>
-<h2 id="4-建立external-contig-db的路径信息txt"><a href="#4-建立external-contig-db的路径信息txt" class="headerlink" title="4. 建立external contig db的路径信息txt"></a>4. 建立external contig db的路径信息txt</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">echo</span> -e <span class="string">&quot;name\tcontigs_db_path&quot;</span>; find /data/Food/analysis/R0987_nextgen/Erkang.Zhang/anvio_pangenome/gluconobacter_potus -name <span class="string">&quot;*_rename.fasta.db&quot;</span> | awk -F<span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;&#123;file=$NF; split(file,a,&quot;.&quot;); print a[1]&quot;\t&quot;$0&#125;&#x27;</span>) &gt;Gluconobacter_potus_external_genomes.txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-利用contig-db建立genomes-storage"><a href="#5-利用contig-db建立genomes-storage" class="headerlink" title="5. 利用contig db建立genomes storage"></a>5. 利用contig db建立genomes storage</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">anvi-gen-genomes-storage -e external-genomes.txt \</span><br><span class="line">                         -o PROCHLORO-GENOMES.db</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-进行pangenome的分析"><a href="#6-进行pangenome的分析" class="headerlink" title="6. 进行pangenome的分析"></a>6. 进行pangenome的分析</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">anvi-pan-genome -g PROCHLORO-GENOMES.db \</span><br><span class="line">                --project-name <span class="string">&quot;Prochlorococcus_Pan&quot;</span> \</span><br><span class="line">                --output-dir PROCHLORO \</span><br><span class="line">                --num-threads 6</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-建立可交互式网页"><a href="#7-建立可交互式网页" class="headerlink" title="7. 建立可交互式网页"></a>7. 建立可交互式网页</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anvi-display-pan -p PROJECT-PAN.db -g PROJECT-PAN-GENOMES.db</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-在teagasc的hpc上建立网页"><a href="#8-在teagasc的hpc上建立网页" class="headerlink" title="8. 在teagasc的hpc上建立网页"></a>8. 在teagasc的hpc上建立网页</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在电脑terminal上登陆</span></span><br><span class="line">ssh -J erkang.zhang@hcux401.teagasc.net     -L 5555:localhost:5555     erkang.zhang@compute09</span><br><span class="line"><span class="comment">#然后conda激活环境，并运行</span></span><br><span class="line">anvi-display-pan -p Gluconobacter_potus_Pan/Gluconobacter_potus_Pan-PAN.db -g Gluconobacter_potus-GENOMES.db --server-only -P 5555</span><br></pre></td></tr></table></figure>
-
-<h2 id="9-可以计算genome之间的ANI并将数据储存到pan-db中"><a href="#9-可以计算genome之间的ANI并将数据储存到pan-db中" class="headerlink" title="9. 可以计算genome之间的ANI并将数据储存到pan db中"></a>9. 可以计算genome之间的ANI并将数据储存到pan db中</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">anvi-compute-genome-similarity --external-genomes Gluconobacter_potus_external_genomes.txt \</span><br><span class="line">                               --program pyANI \</span><br><span class="line">                               --output-dir ANI \</span><br><span class="line">                               --num-threads 12 \</span><br><span class="line">                               --pan-db Gluconobacter_potus_Pan/Gluconobacter_potus_Pan-PAN.db</span><br></pre></td></tr></table></figure>
-
-<h2 id="10-最外层有function注释的图"><a href="#10-最外层有function注释的图" class="headerlink" title="10. 最外层有function注释的图"></a>10. 最外层有function注释的图</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anvi-display-functions --external-genomes Gluconobacter_potus_external_genomes.txt --annotation-source COG24_FUNCTION --profile-db COG24-PROFILE.db</span><br><span class="line"></span><br><span class="line">anvi-interactive -p COG24-PROFILE.db --server-only -P 5555 --manual</span><br></pre></td></tr></table></figure>
-
-<h2 id="11-计算rarefaction"><a href="#11-计算rarefaction" class="headerlink" title="11. 计算rarefaction"></a>11. 计算rarefaction</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anvi-compute-rarefaction-curves -p Gluconobacter_potus_Pan/Gluconobacter_potus_Pan-PAN.db --iterations 100 -O rarefaction.svg</span><br></pre></td></tr></table></figure>
-
-
+          <p>anvio pangenome 分析流程</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/03/30/anvio_pangenome/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1076,7 +1061,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2026/04/13/yeast%20isolates%E7%9A%84%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4/</loc>
+    
+    <lastmod>2026-04-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2026/04/13/bacteria%20isolates%E7%9A%84%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4/</loc>
+    
+    <lastmod>2026-04-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2026/03/30/anvio_pangenome/</loc>
     
     <lastmod>2026-03-30</lastmod>
@@ -148,7 +166,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -156,35 +174,42 @@
   
   <url>
     <loc>http://example.com/tags/%E7%94%9F%E4%BF%A1%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/%E8%BD%AF%E4%BB%B6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/R%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF%E8%BD%AF%E4%BB%B6%E6%B5%81%E7%A8%8B/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E8%8F%8C%E6%A0%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B/</loc>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -193,21 +218,21 @@
   
   <url>
     <loc>http://example.com/categories/2023/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/2022/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/2026/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
